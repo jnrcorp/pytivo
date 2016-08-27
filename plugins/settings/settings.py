@@ -73,9 +73,19 @@ class Settings(Plugin):
 
         shares_data = []
         for section in config.config.sections():
+<<<<<<< HEAD
             if not section.startswith(('_tivo_', 'Server')):
                 if (not (config.config.has_option(section, 'type')) or config.config.get(section, 'type').lower() not in ['settings', 'togo']):
                     shares_data.append((section, dict(config.config.items(section, raw=True))))
+=======
+            if not section.startswith(('_tivo_', 'Server', 'logger', 'formatter', 'handler')):
+                if (not (config.config.has_option(section, 'type')) or
+                    config.config.get(section, 'type').lower() not in
+                    ['settings', 'togo']):
+                    shares_data.append((section,
+                                        dict(config.config.items(section,
+                                                                 raw=True))))
+>>>>>>> 7110d31... initial qpkg packaging
 
         t = Template(SETTINGS_TEMPLATE, filter=EncodeUnicode)
         t.mode = buildhelp.mode

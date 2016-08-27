@@ -32,6 +32,9 @@ import socket
 import struct
 import sys
 import threading
+import select
+import traceback
+import logging
 import time
 from functools import reduce
 
@@ -71,7 +74,7 @@ _BROWSER_TIME = 500
 _MDNS_ADDR = '224.0.0.251'
 _MDNS_PORT = 5353
 _DNS_PORT = 53
-_DNS_TTL = 60 * 60  # one hour default TTL
+_DNS_TTL = 120
 
 _MAX_MSG_TYPICAL = 1460  # unused
 _MAX_MSG_ABSOLUTE = 8966
@@ -1656,6 +1659,7 @@ class Zeroconf(QuietLogger):
         """
         # hook for threads
         self._GLOBAL_DONE = False
+        self.logger = logging.getLogger('pyTivo.zeroconf')
 
         self._listen_socket = new_socket()
         interfaces = normalize_interface_choice(interfaces, socket.AF_INET)
